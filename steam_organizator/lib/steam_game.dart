@@ -3,5 +3,5 @@ class SteamGame {
   double? mark;
   double? gameHours;
 
-  SteamGame(this.name, this.mark, this.gameHours);
+  SteamGame(this.name, {this.mark, this.gameHours});
 }

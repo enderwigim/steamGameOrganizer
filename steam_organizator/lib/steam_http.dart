@@ -1,6 +1,8 @@
 import 'package:http/http.dart' as http;
 import 'package:dotenv/dotenv.dart' as dotenv;
-import 'dart:convert'; 
+import 'dart:convert';
+
+import 'package:steam_organizator/steam_game.dart'; 
 
 class SteamCom {
 
@@ -43,8 +45,15 @@ class SteamCom {
     // Verify is was okay.
     if (response.statusCode == 200) {
       // Decode response
-      final data = jsonDecode(response.body);
-      print('$data');
+      final Map<String, dynamic> data = jsonDecode(response.body);
+      // Get array with everygame name.
+      final dataArr = data["response"]["games"];
+      // Generate a list with the SteamGames.
+      List<SteamGame> games = [];
+      dataArr.forEach((game) => {
+        games.add(SteamGame(game["name"]))
+      });
+      return games;
     } else {
       print('Error en la solicitud: ${response.statusCode}');
     }
